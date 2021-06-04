@@ -1,3 +1,5 @@
-const App = () => <h1>Ice cream meter</h1>;
+import Home from './components/Home';
+
+const App = () => <Home />;
 
 export default App;
