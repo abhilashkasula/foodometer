@@ -12,6 +12,9 @@ const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
   letter-spacing: 1px;
+  @media (max-width: 768px) {
+    width: 50px;
+  }
 `;
 
 const StyledText = styled.div`
@@ -19,6 +22,9 @@ const StyledText = styled.div`
   width: 100%;
   height: 30px;
   margin-left: 5px;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const Logo = ({className}) => (
@@ -39,6 +45,11 @@ const StyledLogo = styled(Logo)`
   position: relative;
   align-items: center;
   justify-content: center;
+  @media (max-width: 768px) {
+    justify-content: start;
+    padding: 18px;
+    max-width: 50px;
+  }
 `;
 
 export default StyledLogo;
