@@ -1,6 +1,8 @@
 import styled from 'styled-components';
+import {Link} from 'react-router-dom';
+import Icon from './Icon';
 
-const StyledA = styled.a`
+const StyledLink = styled(Link)`
   width: 280px;
   border-right: 1px solid #e6ecf1;
   font-size: 24px;
@@ -12,11 +14,6 @@ const StyledA = styled.a`
   letter-spacing: 1px;
 `;
 
-const StyledIcon = styled.img`
-  width: 39px;
-  height: 39px;
-`;
-
 const StyledText = styled.div`
   display: block;
   width: 100%;
@@ -26,10 +23,10 @@ const StyledText = styled.div`
 
 const Logo = ({className}) => (
   <li className={className}>
-    <StyledA href="/">
-      <StyledIcon src="https://img.icons8.com/doodle/48/000000/french-fries.png" />
+    <StyledLink to="/">
+      <Icon />
       <StyledText>Foodometer</StyledText>
-    </StyledA>
+    </StyledLink>
   </li>
 );
 

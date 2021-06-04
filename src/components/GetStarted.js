@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {useHistory} from 'react-router-dom';
 
 const GettingStartedContainer = styled.div`
   max-width: 1100px;
@@ -10,9 +11,12 @@ const GettingStartedContainer = styled.div`
 `;
 
 const GetStarted = ({className, nodeRef}) => {
+  const history = useHistory();
+  const handleClick = () => history.push('/login');
+
   return (
     <GettingStartedContainer>
-      <button className={className} ref={nodeRef}>
+      <button className={className} ref={nodeRef} onClick={handleClick}>
         Get Started
       </button>
     </GettingStartedContainer>
@@ -27,6 +31,7 @@ const StyledGetStarted = styled(GetStarted)`
   box-shadow: ${({isHovered}) => isHovered && '3px 1px 7px 0px #ccc'};
   background-color: ${({isHovered}) => (isHovered ? 'black' : '#191919')};
   border-radius: 7px;
+  border: 1px solid transparent;
   font-weight: 500;
   @media (max-width: 768px) {
     font-size: 18px;
