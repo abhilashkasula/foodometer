@@ -1,11 +1,10 @@
 import NavBar from './NavBar';
 
-const Layout = props => {
-  console.log(props);
+const Layout = ({children}) => {
   return (
     <div>
       <NavBar />
-      <div>{props.children}</div>
+      <div>{children}</div>
     </div>
   );
 };

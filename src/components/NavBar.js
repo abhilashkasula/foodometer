@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
+import useAuthentication from './hooks/useAuthentication';
 import Logo from './Logo';
 
 const Space = styled.li`
@@ -32,8 +33,8 @@ const OptionLink = styled(Link)`
   font-size: 18px;
   font-weight: 500;
   padding: 10px 30px;
-  background: ${({signup}) => (signup ? 'black' : 'transparent')};
-  color: ${({signup}) => (signup ? 'white' : 'black')};
+  background: ${({signup}) => (signup === 'true' ? 'black' : 'transparent')};
+  color: ${({signup}) => (signup === 'true' ? 'white' : 'black')};
   border-radius: 4px;
   @media (max-width: 768px) {
     font-size: 14px;
@@ -41,20 +42,32 @@ const OptionLink = styled(Link)`
   }
 `;
 
-const AuthorizeOptions = ({className}) => (
-  <li className={className}>
-    <StyledList>
-      <li>
-        <OptionLink signup to="/join">
-          Sign up
-        </OptionLink>
-      </li>
-      <li>
-        <OptionLink to="/login">Sign in</OptionLink>
-      </li>
-    </StyledList>
-  </li>
-);
+const AuthorizeOptions = ({className}) => {
+  const isAuthenticated = useAuthentication();
+
+  return (
+    <li className={className}>
+      {isAuthenticated ? (
+        <StyledList>
+          <li>
+            <OptionLink to="/logout">Logout</OptionLink>
+          </li>
+        </StyledList>
+      ) : (
+        <StyledList>
+          <li>
+            <OptionLink signup="true" to="/join">
+              Sign up
+            </OptionLink>
+          </li>
+          <li>
+            <OptionLink to="/login">Sign in</OptionLink>
+          </li>
+        </StyledList>
+      )}
+    </li>
+  );
+};
 
 const StyledAuthorizeOptions = styled(AuthorizeOptions)`
   height: 80px;
