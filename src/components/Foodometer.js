@@ -1,5 +1,6 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import styled from 'styled-components';
+import Api from '../api/api';
 import useHover from './hooks/useHover';
 
 const Name = styled.h2`
@@ -88,33 +89,25 @@ const StyledPerson = styled(Person)`
 `;
 
 const Team = ({className}) => {
-  const [team] = useState({
-    rupeesPerOne: 100,
-    foodmoji: 'https://img.icons8.com/doodle/48/000000/french-fries.png',
-    people: [
-      {
-        id: 1,
-        name: 'John',
-        count: 1,
-      },
-      {
-        id: 2,
-        name: 'David',
-        count: 3,
-      },
-    ],
-  });
-  return (
+  const [meter, setMeter] = useState(null);
+
+  useEffect(() => {
+    Api.getMeter().then(meter => setMeter(() => meter));
+  }, []);
+
+  return meter ? (
     <div className={className}>
-      {team.people.map(person => (
+      {meter.people.map(person => (
         <StyledPerson
           person={person}
           key={person.id}
-          foodmoji={team.foodmoji}
-          rupees={team.rupeesPerOne}
+          foodmoji={meter.foodmoji}
+          rupees={meter.rupeesPerOne}
         />
       ))}
     </div>
+  ) : (
+    <div className={className}>Loading</div>
   );
 };
 

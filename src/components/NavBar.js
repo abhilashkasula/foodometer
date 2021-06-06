@@ -1,6 +1,6 @@
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import styled from 'styled-components';
-import useAuthentication from './hooks/useAuthentication';
+import Api from '../api/api';
 import Logo from './Logo';
 
 const Space = styled.li`
@@ -42,15 +42,18 @@ const OptionLink = styled(Link)`
   }
 `;
 
-const AuthorizeOptions = ({className}) => {
-  const isAuthenticated = useAuthentication();
+const AuthorizeOptions = ({className, isAuthenticated, setAuthentication}) => {
+  const handleLogout = () =>
+    Api.logout().then(() => setAuthentication(() => false));
 
   return (
     <li className={className}>
       {isAuthenticated ? (
         <StyledList>
           <li>
-            <OptionLink to="/logout">Logout</OptionLink>
+            <OptionLink to="/" onClick={handleLogout}>
+              Logout
+            </OptionLink>
           </li>
         </StyledList>
       ) : (
@@ -82,13 +85,16 @@ const StyledAuthorizeOptions = styled(AuthorizeOptions)`
   }
 `;
 
-const NavBar = ({className}) => {
+const NavBar = ({className, isAuthenticated, setAuthentication}) => {
   return (
     <div className={className}>
       <StyledList isMob>
         <Logo />
         <Space />
-        <StyledAuthorizeOptions />
+        <StyledAuthorizeOptions
+          isAuthenticated={isAuthenticated}
+          setAuthentication={setAuthentication}
+        />
       </StyledList>
     </div>
   );

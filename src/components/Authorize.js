@@ -58,7 +58,7 @@ const StyledOtherOption = styled(OtherOption)`
 `;
 
 const Authorize = ({className, isLogin = false}) => {
-  const isAuthenticated = useAuthentication();
+  const [isAuthenticated] = useAuthentication();
 
   document.body.style.background = '#f5f7f9';
 

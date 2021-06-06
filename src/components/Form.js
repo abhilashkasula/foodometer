@@ -1,6 +1,8 @@
 import {useState} from 'react';
 import styled from 'styled-components';
 import useHover from './hooks/useHover';
+import Api from '../api/api';
+import {useHistory} from 'react-router';
 
 const Label = styled.label`
   color: #9daab6;
@@ -52,6 +54,17 @@ const Form = ({className, isLogin}) => {
   const handleEmailChange = e => setEmail(e.target.value);
   const handlePasswordChange = e => setPassword(e.target.value);
   const handleConfirmChange = e => setConfirm(e.target.value);
+  const history = useHistory();
+
+  const handleLogin = () => {
+    Api.login(email, password).then(({error}) => error || history.push('/'));
+  };
+
+  const handleSignup = () => {
+    Api.signup(email, password, confirm).then(
+      ({error}) => error || history.push('/login')
+    );
+  };
 
   return (
     <div className={className}>
@@ -84,7 +97,11 @@ const Form = ({className, isLogin}) => {
           />
         </Field>
       )}
-      <Submit ref={ref} isHovered={isHovered}>
+      <Submit
+        ref={ref}
+        isHovered={isHovered}
+        onClick={isLogin ? handleLogin : handleSignup}
+      >
         {isLogin ? 'Sign in' : 'Create your account'}
       </Submit>
     </div>

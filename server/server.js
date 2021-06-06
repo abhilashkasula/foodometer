@@ -12,6 +12,11 @@ const pool = new Pool({
 
 app.locals.db = new Database(pool);
 
+app.use((req, res, next) => {
+  console.log(req.method, req.path);
+  next();
+});
+
 app.use('/api', api);
 
 app.listen(9000, () => console.log('Listening at 9000...'));

@@ -1,9 +1,12 @@
 import NavBar from './NavBar';
 
-const Layout = ({children}) => {
+const Layout = ({children, isAuthenticated, setAuthentication}) => {
   return (
     <div>
-      <NavBar />
+      <NavBar
+        isAuthenticated={isAuthenticated}
+        setAuthentication={setAuthentication}
+      />
       <div>{children}</div>
     </div>
   );

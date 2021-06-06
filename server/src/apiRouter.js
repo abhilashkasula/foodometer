@@ -16,11 +16,12 @@ api.use(
 
 api.use('/auth', authentication);
 
-api.use(handlers.allowAuthorized);
+api.get('/isAuthenticated', [
+  handlers.allowAuthorized,
+  (req, res) => res.json({msg: 'Authenticated'}),
+]);
+api.get('/meter', [handlers.allowAuthorized, handlers.serveMeter]);
 
-api.get('/isAuthenticated', (req, res) => res.json({msg: 'Authenticated'}));
-api.get('/meter', handlers.serveMeter);
-
-api.post('/logout', handlers.logout);
+api.post('/logout', [handlers.allowAuthorized, handlers.logout]);
 
 module.exports = {api};

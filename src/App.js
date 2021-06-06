@@ -1,7 +1,6 @@
 import {Route, Switch} from 'react-router';
 import {BrowserRouter as Router} from 'react-router-dom';
 import Authorize from './components/Authorize';
-import Foodometer from './components/Foodometer';
 import Home from './components/Home';
 
 const App = () => (

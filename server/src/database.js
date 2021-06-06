@@ -34,7 +34,15 @@ class Database {
 
   getMeter(id) {
     return new Promise(resolve => {
-      this.db.query(queries.getMeter(id)).then(({rows}) => resolve(rows));
+      this.db.connect((err, client, done) => {
+        client.query(queries.getUserById(id)).then(({rows}) => {
+          const {rupees, foodmoji} = rows[0];
+          client.query(queries.getMeter(id)).then(({rows}) => {
+            resolve({rupees, foodmoji, people: rows});
+            done();
+          });
+        });
+      });
     });
   }
 }
