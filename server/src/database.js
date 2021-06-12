@@ -58,12 +58,38 @@ class Database {
   }
 
   addPerson(userId, person, count) {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       this.db.connect((err, client, done) => {
-        client
-          .query(queries.addPerson(userId, person, count))
-          .then(([, {rows}]) => resolve(rows[0]));
+        client.query(queries.getUserById(userId)).then(({rows}) => {
+          if (!rows.length) {
+            done();
+            return reject({error: 'No user found'});
+          }
+          client
+            .query(queries.addPerson(userId, person, count))
+            .then(([, {rows}]) => resolve(rows[0]) || done());
+        });
       });
+    });
+  }
+
+  incrementCount(userId, personId) {
+    return new Promise((resolve, reject) => {
+      this.db
+        .query(queries.incrementCount(userId, personId))
+        .then(() => resolve({res: 'Success'}))
+        .catch(() => reject({error: 'No user or person found'}));
+    });
+  }
+
+  decrementCount(userId, personId) {
+    return new Promise((resolve, reject) => {
+      this.db
+        .query(queries.decrementCount(userId, personId))
+        .then(() => resolve({res: 'Success'}) || console.log('Success'))
+        .catch(
+          err => reject({error: 'No user or person found'}) || console.log(err)
+        );
     });
   }
 }

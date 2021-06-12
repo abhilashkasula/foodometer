@@ -10,7 +10,6 @@ const Team = ({className}) => {
 
   useEffect(() => {
     Api.getDetails().then(({people, foodmoji, rupees}) => {
-      console.log(people, foodmoji, rupees);
       setPeople(() => people);
       setDetails(() => ({foodmoji, rupees}));
     });

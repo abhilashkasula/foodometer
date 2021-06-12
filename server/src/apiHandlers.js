@@ -32,10 +32,34 @@ const addPerson = (req, res) => {
   db.addPerson(req.session.id, person, 0).then(data => res.json({res: data}));
 };
 
+const incrementCount = (req, res) => {
+  const {personId} = req.body;
+  const {id} = req.session;
+  const {db} = req.app.locals;
+
+  console.log(personId, id);
+
+  db.incrementCount(id, personId)
+    .then(response => res.json(response))
+    .catch(err => res.status(400).json(err));
+};
+
+const decrementCount = (req, res) => {
+  const {personId} = req.body;
+  const {id} = req.session;
+  const {db} = req.app.locals;
+
+  db.decrementCount(id, personId)
+    .then(response => res.json(response))
+    .catch(err => console.log(err) || res.status(400).json(err));
+};
+
 module.exports = {
   allowAuthorized,
   serveDetails,
   logout,
   addPerson,
   servePerson,
+  incrementCount,
+  decrementCount,
 };

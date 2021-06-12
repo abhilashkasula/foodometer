@@ -23,6 +23,9 @@ api.get('/isAuthenticated', [
 api.get('/details', [handlers.allowAuthorized, handlers.serveDetails]);
 api.get('/person/:id', [handlers.allowAuthorized, handlers.servePerson]);
 
+api.post('/increment', [handlers.allowAuthorized, handlers.incrementCount]);
+api.post('/decrement', [handlers.allowAuthorized, handlers.decrementCount]);
+
 api.post('/addPerson', [handlers.allowAuthorized, handlers.addPerson]);
 api.post('/logout', [handlers.allowAuthorized, handlers.logout]);
 

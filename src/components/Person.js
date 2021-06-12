@@ -20,11 +20,19 @@ const Person = ({className, foodmoji, rupees, id}) => {
     Api.getPerson(id).then(person => setPerson(() => person));
   }, [id]);
 
-  const incrementCount = () =>
-    setPerson(person => ({...person, count: person.count + 1}));
+  const incrementCount = () => {
+    Api.incrementCount(id).then(
+      ({error}) =>
+        !error && setPerson(person => ({...person, count: person.count + 1}))
+    );
+  };
 
-  const decrementCount = () =>
-    setPerson(person => ({...person, count: person.count - 1}));
+  const decrementCount = () => {
+    Api.decrementCount(id).then(
+      ({error}) =>
+        !error && setPerson(person => ({...person, count: person.count - 1}))
+    );
+  };
 
   return (
     person && (

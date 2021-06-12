@@ -6,6 +6,8 @@ const ROUTES = {
   ADD_PERSON: '/api/addPerson',
   DETAILS: '/api/details',
   PERSON: '/api/person/',
+  INCREMENT: '/api/increment',
+  DECREMENT: '/api/decrement',
 };
 
 const get = route => fetch(route).then(res => res.json());
@@ -28,6 +30,19 @@ const signup = (email, password, confirm) =>
 
 const addPerson = person => post(ROUTES.ADD_PERSON, {person});
 
-const Api = {isAuth, login, signup, getDetails, logout, addPerson, getPerson};
+const incrementCount = id => post(ROUTES.INCREMENT, {personId: id});
+const decrementCount = id => post(ROUTES.DECREMENT, {personId: id});
+
+const Api = {
+  isAuth,
+  login,
+  signup,
+  getDetails,
+  logout,
+  addPerson,
+  getPerson,
+  incrementCount,
+  decrementCount,
+};
 
 export default Api;
