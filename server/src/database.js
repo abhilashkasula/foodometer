@@ -73,6 +73,15 @@ class Database {
     });
   }
 
+  deletePerson(userId, personId) {
+    return new Promise(resolve => {
+      this.db
+        .query(queries.deletePerson(userId, personId))
+        .then(() => resolve({res: 'Success'}))
+        .catch(() => reject({error: 'No person fount'}));
+    });
+  }
+
   incrementCount(userId, personId) {
     return new Promise((resolve, reject) => {
       this.db
@@ -86,7 +95,7 @@ class Database {
     return new Promise((resolve, reject) => {
       this.db
         .query(queries.decrementCount(userId, personId))
-        .then(() => resolve({res: 'Success'}) || console.log('Success'))
+        .then(() => resolve({res: 'Success'}))
         .catch(
           err => reject({error: 'No user or person found'}) || console.log(err)
         );

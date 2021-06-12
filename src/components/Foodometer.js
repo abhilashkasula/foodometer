@@ -16,6 +16,8 @@ const Team = ({className}) => {
   }, []);
 
   const handleNewPerson = person => setPeople(people => [person, ...people]);
+  const handleDelete = personId =>
+    setPeople(people => people.filter(id => id !== personId));
 
   return people && details ? (
     <div className={className}>
@@ -26,6 +28,7 @@ const Team = ({className}) => {
           foodmoji={details.foodmoji}
           rupees={details.rupees}
           id={id}
+          handleDelete={handleDelete}
         />
       ))}
     </div>

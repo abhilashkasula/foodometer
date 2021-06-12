@@ -27,6 +27,8 @@ api.post('/increment', [handlers.allowAuthorized, handlers.incrementCount]);
 api.post('/decrement', [handlers.allowAuthorized, handlers.decrementCount]);
 
 api.post('/addPerson', [handlers.allowAuthorized, handlers.addPerson]);
+api.post('/deletePerson', [handlers.allowAuthorized, handlers.deletePerson]);
+
 api.post('/logout', [handlers.allowAuthorized, handlers.logout]);
 
 module.exports = {api};

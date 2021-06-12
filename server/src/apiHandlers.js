@@ -29,7 +29,18 @@ const addPerson = (req, res) => {
   const {person} = req.body;
   const {db} = req.app.locals;
 
-  db.addPerson(req.session.id, person, 0).then(data => res.json({res: data}));
+  db.addPerson(req.session.id, person, 0)
+    .then(data => res.json({res: data}))
+    .catch(err => res.status(400).json(err));
+};
+
+const deletePerson = (req, res) => {
+  const {person} = req.body;
+  const {db} = req.app.locals;
+
+  db.deletePerson(req.session.id, person)
+    .then(data => res.json(data))
+    .catch(err => res.status(400).json(err));
 };
 
 const incrementCount = (req, res) => {
@@ -57,6 +68,7 @@ module.exports = {
   serveDetails,
   logout,
   addPerson,
+  deletePerson,
   servePerson,
   incrementCount,
   decrementCount,

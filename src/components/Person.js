@@ -12,7 +12,14 @@ const Rupees = styled.div`
   font-weight: 600;
 `;
 
-const Person = ({className, foodmoji, rupees, id}) => {
+const Delete = styled.img`
+  position: absolute;
+  transform: translate(510%, -110%);
+  width: 20px;
+  cursor: pointer;
+`;
+
+const Person = ({className, foodmoji, rupees, id, handleDelete}) => {
   const [ref, isHovered] = useHover();
   const [person, setPerson] = useState(null);
 
@@ -34,6 +41,10 @@ const Person = ({className, foodmoji, rupees, id}) => {
     );
   };
 
+  const deletePerson = () => {
+    Api.deletePerson(id).then(({error}) => !error && handleDelete(id));
+  };
+
   return (
     person && (
       <div
@@ -41,6 +52,11 @@ const Person = ({className, foodmoji, rupees, id}) => {
         style={isHovered ? {boxShadow: '0px 0px 7px #d4dadf'} : {}}
         ref={ref}
       >
+        <Delete
+          src="https://img.icons8.com/material/24/000000/delete-sign--v1.png"
+          style={{visibility: isHovered ? 'visible' : 'hidden'}}
+          onClick={deletePerson}
+        />
         <Name>{person.person}</Name>
         <Meter
           foodmoji={foodmoji}
