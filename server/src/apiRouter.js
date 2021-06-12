@@ -20,9 +20,10 @@ api.get('/isAuthenticated', [
   handlers.allowAuthorized,
   (req, res) => res.json({msg: 'Authenticated'}),
 ]);
-api.get('/meter', [handlers.allowAuthorized, handlers.serveMeter]);
-api.post('/addPerson', [handlers.allowAuthorized, handlers.addPerson]);
+api.get('/details', [handlers.allowAuthorized, handlers.serveDetails]);
+api.get('/person/:id', [handlers.allowAuthorized, handlers.servePerson]);
 
+api.post('/addPerson', [handlers.allowAuthorized, handlers.addPerson]);
 api.post('/logout', [handlers.allowAuthorized, handlers.logout]);
 
 module.exports = {api};

@@ -32,16 +32,27 @@ class Database {
     });
   }
 
-  getMeter(id) {
+  getDetails(id) {
     return new Promise(resolve => {
       this.db.connect((err, client, done) => {
         client.query(queries.getUserById(id)).then(({rows}) => {
           const {rupees, foodmoji} = rows[0];
-          client.query(queries.getMeter(id)).then(({rows}) => {
-            resolve({rupees, foodmoji, people: rows});
+          client.query(queries.getIds(id)).then(({rows}) => {
+            resolve({rupees, foodmoji, people: rows.map(row => row.id)});
             done();
           });
         });
+      });
+    });
+  }
+
+  getPerson(userId, id) {
+    return new Promise((resolve, reject) => {
+      this.db.query(queries.getPerson(userId, id)).then(({rows}) => {
+        if (!rows.length) {
+          return reject({error: 'No person found'});
+        }
+        resolve(rows[0]);
       });
     });
   }

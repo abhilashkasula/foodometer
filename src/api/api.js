@@ -4,7 +4,8 @@ const ROUTES = {
   SIGNUP: '/api/auth/signup',
   LOGOUT: '/api/logout',
   ADD_PERSON: '/api/addPerson',
-  METER: '/api/meter',
+  DETAILS: '/api/details',
+  PERSON: '/api/person/',
 };
 
 const get = route => fetch(route).then(res => res.json());
@@ -17,7 +18,8 @@ const post = (route, body) =>
   }).then(res => res.json());
 
 const isAuth = () => get(ROUTES.IS_AUTHENTICATED);
-const getMeter = () => get(ROUTES.METER);
+const getDetails = () => get(ROUTES.DETAILS);
+const getPerson = id => get(`${ROUTES.PERSON}/${id}`);
 
 const login = (email, password) => post(ROUTES.LOGIN, {email, password});
 const logout = () => post(ROUTES.LOGOUT);
@@ -26,6 +28,6 @@ const signup = (email, password, confirm) =>
 
 const addPerson = person => post(ROUTES.ADD_PERSON, {person});
 
-const Api = {isAuth, login, signup, getMeter, logout, addPerson};
+const Api = {isAuth, login, signup, getDetails, logout, addPerson, getPerson};
 
 export default Api;

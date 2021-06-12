@@ -10,10 +10,19 @@ const logout = (req, res) => {
   res.json({msg: 'Logged out'});
 };
 
-const serveMeter = (req, res) => {
+const serveDetails = (req, res) => {
   const {db} = req.app.locals;
 
-  db.getMeter(req.session.id).then(rows => res.json(rows));
+  db.getDetails(req.session.id).then(rows => res.json(rows));
+};
+
+const servePerson = (req, res) => {
+  const {id} = req.params;
+  const {db} = req.app.locals;
+
+  db.getPerson(req.session.id, id)
+    .then(person => res.json(person))
+    .catch(err => res.status(400).json(err));
 };
 
 const addPerson = (req, res) => {
@@ -23,4 +32,10 @@ const addPerson = (req, res) => {
   db.addPerson(req.session.id, person, 0).then(data => res.json({res: data}));
 };
 
-module.exports = {allowAuthorized, serveMeter, logout, addPerson};
+module.exports = {
+  allowAuthorized,
+  serveDetails,
+  logout,
+  addPerson,
+  servePerson,
+};

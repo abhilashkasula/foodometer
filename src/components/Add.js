@@ -35,7 +35,7 @@ const Add = ({className, handleNewPerson}) => {
   const handleChange = e => setName(() => e.target.value);
   const handleAdd = () =>
     Api.addPerson(name).then(
-      ({error, res}) => !error && (handleNewPerson(res) || setName(() => ''))
+      ({error, res}) => !error && (handleNewPerson(res.id) || setName(() => ''))
     );
 
   return (

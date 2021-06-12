@@ -5,28 +5,28 @@ import Person from './Person';
 import Add from './Add';
 
 const Team = ({className}) => {
-  const [meter, setMeter] = useState(null);
+  const [people, setPeople] = useState(null);
   const [details, setDetails] = useState(null);
 
   useEffect(() => {
-    Api.getMeter().then(({people, foodmoji, rupees}) => {
+    Api.getDetails().then(({people, foodmoji, rupees}) => {
       console.log(people, foodmoji, rupees);
-      setMeter(() => people);
+      setPeople(() => people);
       setDetails(() => ({foodmoji, rupees}));
     });
   }, []);
 
-  const handleNewPerson = person => setMeter(meter => [person, ...meter]);
+  const handleNewPerson = person => setPeople(people => [person, ...people]);
 
-  return meter && details ? (
+  return people && details ? (
     <div className={className}>
       <Add handleNewPerson={handleNewPerson} />
-      {meter.map(person => (
+      {people.map(id => (
         <Person
-          person={person}
-          key={person.id}
+          key={id}
           foodmoji={details.foodmoji}
           rupees={details.rupees}
+          id={id}
         />
       ))}
     </div>
