@@ -45,6 +45,16 @@ class Database {
       });
     });
   }
+
+  addPerson(userId, person, count) {
+    return new Promise(resolve => {
+      this.db.connect((err, client, done) => {
+        client
+          .query(queries.addPerson(userId, person, count))
+          .then(([, {rows}]) => resolve(rows[0]));
+      });
+    });
+  }
 }
 
 module.exports = Database;

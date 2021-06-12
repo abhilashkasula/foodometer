@@ -16,4 +16,11 @@ const serveMeter = (req, res) => {
   db.getMeter(req.session.id).then(rows => res.json(rows));
 };
 
-module.exports = {allowAuthorized, serveMeter, logout};
+const addPerson = (req, res) => {
+  const {person} = req.body;
+  const {db} = req.app.locals;
+
+  db.addPerson(req.session.id, person, 0).then(data => res.json({res: data}));
+};
+
+module.exports = {allowAuthorized, serveMeter, logout, addPerson};

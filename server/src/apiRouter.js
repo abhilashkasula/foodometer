@@ -21,6 +21,7 @@ api.get('/isAuthenticated', [
   (req, res) => res.json({msg: 'Authenticated'}),
 ]);
 api.get('/meter', [handlers.allowAuthorized, handlers.serveMeter]);
+api.post('/addPerson', [handlers.allowAuthorized, handlers.addPerson]);
 
 api.post('/logout', [handlers.allowAuthorized, handlers.logout]);
 
