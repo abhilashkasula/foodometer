@@ -5,7 +5,7 @@ const ROUTES = {
   LOGOUT: '/api/logout',
   ADD_PERSON: '/api/addPerson',
   DETAILS: '/api/details',
-  PERSON: '/api/person/',
+  PERSON: '/api/person',
   INCREMENT: '/api/increment',
   DECREMENT: '/api/decrement',
   DELETE_PERSON: '/api/deletePerson',

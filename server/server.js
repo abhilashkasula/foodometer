@@ -17,6 +17,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.static('build'));
+
 app.use('/api', api);
 
 app.listen(9000, () => console.log('Listening at 9000...'));
