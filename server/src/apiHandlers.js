@@ -37,8 +37,6 @@ const incrementCount = (req, res) => {
   const {id} = req.session;
   const {db} = req.app.locals;
 
-  console.log(personId, id);
-
   db.incrementCount(id, personId)
     .then(response => res.json(response))
     .catch(err => res.status(400).json(err));
@@ -51,7 +49,7 @@ const decrementCount = (req, res) => {
 
   db.decrementCount(id, personId)
     .then(response => res.json(response))
-    .catch(err => console.log(err) || res.status(400).json(err));
+    .catch(err => res.status(400).json(err));
 };
 
 module.exports = {
