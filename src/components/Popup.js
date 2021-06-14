@@ -5,6 +5,9 @@ const Content = styled.div`
   padding: 32px 24px;
   border: 1px solid #d4dadf;
   border-radius: 4px;
+  @media (max-width: 768px) {
+    max-width: 260px;
+  }
 `;
 
 const Msg = styled.h3`
@@ -59,7 +62,7 @@ const Popup = ({toggle, msg, className, otherOptions}) => (
 );
 
 const StyledPopup = styled(Popup)`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
