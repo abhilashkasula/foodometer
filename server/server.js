@@ -24,4 +24,8 @@ app.use(express.static('build'));
 
 app.use('/api', api);
 
+app.get('/*', function (req, res) {
+  res.sendFile(`${__dirname}/build/index.html`);
+});
+
 app.listen(PORT, () => console.log(`Listening at ${PORT}...`));
