@@ -20,12 +20,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static('build'));
+app.use(express.static('ui/build'));
 
 app.use('/api', api);
 
 app.get('/*', function (req, res) {
-  res.sendFile(`${__dirname}/build/index.html`);
+  res.sendFile(`${__dirname}/ui/build/index.html`);
 });
 
 app.listen(PORT, () => console.log(`Listening at ${PORT}...`));
