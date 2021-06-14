@@ -3,10 +3,13 @@ const {Pool} = require('pg');
 const {api} = require('./src/apiRouter');
 const Database = require('./src/database');
 
+const PORT = process.env.PORT || 9000;
+const DATABASE_URL = process.env.DATABASE_URL;
+
 const app = express();
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: DATABASE_URL,
   ssl: {rejectUnauthorized: false},
 });
 
@@ -21,4 +24,4 @@ app.use(express.static('build'));
 
 app.use('/api', api);
 
-app.listen(9000, () => console.log('Listening at 9000...'));
+app.listen(PORT, () => console.log(`Listening at ${PORT}...`));
