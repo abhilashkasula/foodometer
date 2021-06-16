@@ -1,6 +1,6 @@
 import {Redirect} from 'react-router';
 import {Link} from 'react-router-dom';
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 import useAuthentication from './hooks/useAuthentication';
 import Icon from './Icon';
 import Form from './Form';
@@ -58,17 +58,25 @@ const StyledOtherOption = styled(OtherOption)`
   }
 `;
 
+const fadeIn = keyframes`
+  0% { top: 0%; }
+  100% { top: 16%; }
+`;
+
 const Error = styled.label`
   color: #ff0537;
   font-weight: 500;
   position: absolute;
-  top: 16%;
+  transition: top 3s;
   background: #ff053733;
   width: 458px;
   text-align: center;
   border-radius: 4px;
   padding: 4px 0;
   border: 1px solid #ff6b7ad6;
+  animation-name: ${fadeIn};
+  top: 16%;
+  animation-duration: .5s;
 `;
 
 const Authorize = ({className, isLogin = false}) => {
