@@ -63,6 +63,16 @@ const fadeIn = keyframes`
   100% { top: 16%; }
 `;
 
+const mobileSigninFadein = keyframes`
+  0% { top: 0%; }
+  100% { top: 10%; }
+`;
+
+const mobileSignUpFadein = keyframes`
+  0% { top: 0%; }
+  100% { top: 5%; }
+`;
+
 const Error = styled.label`
   color: #ff0537;
   font-weight: 500;
@@ -76,7 +86,13 @@ const Error = styled.label`
   border: 1px solid #ff6b7ad6;
   animation-name: ${fadeIn};
   top: 16%;
-  animation-duration: .5s;
+  animation-duration: 0.5s;
+  @media (max-width: 768px) {
+    top: ${({isSignup}) => (isSignup ? '5%' : '10%')};
+    animation-name: ${({isSignup}) =>
+      isSignup ? mobileSignUpFadein : mobileSigninFadein};
+    width: 90%;
+  }
 `;
 
 const Authorize = ({className, isLogin = false}) => {
@@ -91,7 +107,7 @@ const Authorize = ({className, isLogin = false}) => {
     <Redirect to="/" />
   ) : (
     <div className={className}>
-      {error && <Error>{error}</Error>}
+      {error && <Error isSignup={!isLogin}>{error}</Error>}
       <Container isSignup={!isLogin}>
         <Header>
           <Title>
