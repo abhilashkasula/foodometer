@@ -3,9 +3,7 @@ const {signup, login, allowUnauthorized} = require('./authHandlers');
 
 const authentication = express.Router();
 
-authentication.use(allowUnauthorized);
-
-authentication.post('/signup', signup);
-authentication.post('/login', login);
+authentication.post('/signup', [allowUnauthorized, signup]);
+authentication.post('/login', [allowUnauthorized, login]);
 
 module.exports = {authentication};

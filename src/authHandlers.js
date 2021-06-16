@@ -4,9 +4,18 @@ const signup = (req, res) => {
   const foodmoji = 'https://img.icons8.com/doodle/48/000000/french-fries.png';
   const rupees = 100;
 
+  if (!email.match(/^[a-z]{2,}@[a-z]{2,}\.[a-z]{2,}$/)) {
+    return res.status(400).json({error: 'Enter a valid email'});
+  }
+
+  if (password.length < 8) {
+    return res
+      .status(400)
+      .json({error: 'Password should be at least 8 characters'});
+  }
+
   if (password !== confirm) {
-    res.statusCode = 400;
-    return res.json({error: "Password didn't match"});
+    return res.status(400).json({error: "Password didn't match"});
   }
 
   db.registerUser(email, password, foodmoji, rupees)
