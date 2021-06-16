@@ -3,16 +3,14 @@ const cookieSession = require('cookie-session');
 const {authentication} = require('./authenticationRouter');
 const handlers = require('./apiHandlers');
 
+const SECRET_NAME = process.env.SECRET_NAME;
+const SECRET_KEY = process.env.SECRET_KEY;
+
 const api = express.Router();
 
 api.use(express.json());
 
-api.use(
-  cookieSession({
-    name: 'session',
-    keys: ['key1', 'key2'],
-  })
-);
+api.use(cookieSession({name: SECRET_NAME, keys: [SECRET_KEY]}));
 
 api.use('/auth', authentication);
 
