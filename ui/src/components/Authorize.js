@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import useAuthentication from './hooks/useAuthentication';
 import Icon from './Icon';
 import Form from './Form';
+import {useEffect, useState} from 'react';
 
 const Container = styled.div`
   border: 1px solid #d4dadf;
@@ -57,15 +58,32 @@ const StyledOtherOption = styled(OtherOption)`
   }
 `;
 
+const Error = styled.label`
+  color: #ff0537;
+  font-weight: 500;
+  position: absolute;
+  top: 16%;
+  background: #ff053733;
+  width: 458px;
+  text-align: center;
+  border-radius: 4px;
+  padding: 4px 0;
+  border: 1px solid #ff6b7ad6;
+`;
+
 const Authorize = ({className, isLogin = false}) => {
   const [isAuthenticated] = useAuthentication();
+  const [error, setError] = useState('');
 
   document.body.style.background = '#f5f7f9';
+
+  useEffect(() => setError(() => ''), [isLogin]);
 
   return isAuthenticated ? (
     <Redirect to="/" />
   ) : (
     <div className={className}>
+      {error && <Error>{error}</Error>}
       <Container isSignup={!isLogin}>
         <Header>
           <Title>
@@ -73,7 +91,7 @@ const Authorize = ({className, isLogin = false}) => {
           </Title>
           <Icon />
         </Header>
-        <Form isLogin={isLogin} />
+        <Form isLogin={isLogin} handleError={setError} />
         <StyledOtherOption isLogin={isLogin} />
       </Container>
     </div>

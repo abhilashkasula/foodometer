@@ -45,7 +45,7 @@ const Submit = styled.button`
   font-size: 16px;
 `;
 
-const Form = ({className, isLogin}) => {
+const Form = ({className, isLogin, handleError}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
@@ -57,13 +57,19 @@ const Form = ({className, isLogin}) => {
   const history = useHistory();
 
   const handleLogin = () => {
-    Api.login(email, password).then(({error}) => error || history.push('/'));
+    handleError(() => '');
+    Api.login(email, password).then(({error}) => {
+      error && handleError(() => error);
+      error || history.push('/');
+    });
   };
 
   const handleSignup = () => {
-    Api.signup(email, password, confirm).then(
-      ({error}) => error || history.push('/login')
-    );
+    handleError(() => '');
+    Api.signup(email, password, confirm).then(({error}) => {
+      error && handleError(() => error);
+      error || history.push('/login');
+    });
   };
 
   return (
