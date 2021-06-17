@@ -6,9 +6,9 @@ const Loading = ({className}) => (
 );
 
 const StyledLoading = styled(Loading)`
-  position: ${({center}) => center && 'absolute'};
-  bottom: ${({center}) => center && '50%'};
-  right: ${({center}) => center && '50%'};
+  position: ${({center, login}) => (center || login) && 'absolute'};
+  bottom: ${({center, login}) => (center && '50%') || (login && '110px')};
+  right: ${({center, login}) => (center && '50%') || (login && '45%')};
   width: ${({center}) => (center ? '80px' : '40px')};
   @media (max-width: 768px) {
     right: ${({center}) => center && '40%'};

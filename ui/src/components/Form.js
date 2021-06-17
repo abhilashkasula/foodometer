@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import useHover from './hooks/useHover';
 import Api from '../api/api';
 import {useHistory} from 'react-router';
+import Loading from './Loading';
 
 const Label = styled.label`
   color: #9daab6;
@@ -39,16 +40,19 @@ const Submit = styled.button`
   line-height: 1em;
   border-radius: 4px;
   border: 1px solid transparent;
-  background-color: ${({isHovered}) => (isHovered ? 'black' : '#282828')};
-  cursor: pointer;
+  background-color: ${({isHovered, isLoading}) =>
+    !isLoading && isHovered ? 'black' : '#282828'};
+  cursor: ${({isLoading}) => (isLoading ? 'not-allowed' : 'pointer')};
   margin-top: 15px;
   font-size: 16px;
+  opacity: ${({isLoading}) => (isLoading ? 0.3 : 1)};
 `;
 
 const Form = ({className, isLogin, handleError}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
+  const [isLoading, setLoading] = useState(false);
   const [ref, isHovered] = useHover();
 
   const handleEmailChange = e => setEmail(e.target.value);
@@ -58,17 +62,21 @@ const Form = ({className, isLogin, handleError}) => {
 
   const handleLogin = () => {
     handleError(() => '');
+    setLoading(() => true);
     Api.login(email, password).then(({error}) => {
       error && handleError(() => error);
       error || history.push('/');
+      setLoading(() => false);
     });
   };
 
   const handleSignup = () => {
     handleError(() => '');
+    setLoading(() => true);
     Api.signup(email, password, confirm).then(({error}) => {
       error && handleError(() => error);
       error || history.push('/login');
+      setLoading(() => false);
     });
   };
 
@@ -106,10 +114,12 @@ const Form = ({className, isLogin, handleError}) => {
       <Submit
         ref={ref}
         isHovered={isHovered}
-        onClick={isLogin ? handleLogin : handleSignup}
+        onClick={isLoading ? () => {} : isLogin ? handleLogin : handleSignup}
+        isLoading={isLoading}
       >
         {isLogin ? 'Sign in' : 'Create your account'}
       </Submit>
+      {isLoading && <Loading login />}
     </div>
   );
 };
