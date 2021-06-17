@@ -55,9 +55,9 @@ const Form = ({className, isLogin, handleError}) => {
   const [isLoading, setLoading] = useState(false);
   const [ref, isHovered] = useHover();
 
-  const handleEmailChange = e => setEmail(e.target.value);
-  const handlePasswordChange = e => setPassword(e.target.value);
-  const handleConfirmChange = e => setConfirm(e.target.value);
+  const handleEmailChange = e => setEmail(e.target.value.trim().toLowerCase());
+  const handlePasswordChange = e => setPassword(e.target.value.trim());
+  const handleConfirmChange = e => setConfirm(e.target.value.trim());
   const history = useHistory();
 
   const handleLogin = () => {

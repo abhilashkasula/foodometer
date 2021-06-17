@@ -38,7 +38,7 @@ const Add = ({className, handleNewPerson}) => {
   const handleChange = e => setName(() => e.target.value);
   const handleAdd = () => {
     setLoading(() => true);
-    Api.addPerson(name).then(({error, res}) => {
+    Api.addPerson(name.trim()).then(({error, res}) => {
       !error && (handleNewPerson(res.id) || setName(() => ''));
       setLoading(() => false);
     });
@@ -58,8 +58,8 @@ const Add = ({className, handleNewPerson}) => {
       />
       {isLoading && <Loading />}
       <AddButton
-        onClick={isLoading ? () => {} : handleAdd}
-        isLoading={isLoading}
+        onClick={isLoading || !name.trim() ? () => {} : handleAdd}
+        isLoading={isLoading || !name.trim()}
       >
         Add
       </AddButton>

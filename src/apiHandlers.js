@@ -28,8 +28,13 @@ const servePerson = (req, res) => {
 const addPerson = (req, res) => {
   const {person} = req.body;
   const {db} = req.app.locals;
+  const name = person.trim();
 
-  db.addPerson(req.session.id, person, 0)
+  if (!name) {
+    return res.json({error: 'Give a valid name'});
+  }
+
+  db.addPerson(req.session.id, name, 0)
     .then(data => res.json({res: data}))
     .catch(err => res.status(400).json(err));
 };
