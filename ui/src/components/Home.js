@@ -2,12 +2,16 @@ import Layout from './Layout';
 import Header from './Header';
 import useAuthentication from './hooks/useAuthentication';
 import Foodometer from './Foodometer';
+import Loading from './Loading';
 
 const Home = () => {
-  const [isAuthenticated, setAuthentication] = useAuthentication();
+  const [isAuthenticated, setAuthentication, isLoading] = useAuthentication();
+
   document.body.style.background = 'white';
 
-  return (
+  return isLoading ? (
+    <Loading center />
+  ) : (
     <Layout
       isAuthenticated={isAuthenticated}
       setAuthentication={setAuthentication}

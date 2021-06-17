@@ -2,6 +2,7 @@ import {useState} from 'react';
 import styled from 'styled-components';
 import Api from '../api/api';
 import useHover from './hooks/useHover';
+import Loading from './Loading';
 
 const NameField = styled.input`
   border: none;
@@ -25,18 +26,23 @@ const AddButton = styled.button`
   border: 1px solid transparent;
   border-radius: 4px;
   font-size: 16px;
-  cursor: pointer;
+  cursor: ${({isLoading}) => (isLoading ? 'not-allowed' : 'pointer')};
+  opacity: ${({isLoading}) => (isLoading ? 0.35 : 1)};
 `;
 
 const Add = ({className, handleNewPerson}) => {
   const [name, setName] = useState('');
+  const [isLoading, setLoading] = useState(false);
   const [ref, isHovered] = useHover();
 
   const handleChange = e => setName(() => e.target.value);
-  const handleAdd = () =>
-    Api.addPerson(name).then(
-      ({error, res}) => !error && (handleNewPerson(res.id) || setName(() => ''))
-    );
+  const handleAdd = () => {
+    setLoading(() => true);
+    Api.addPerson(name).then(({error, res}) => {
+      !error && (handleNewPerson(res.id) || setName(() => ''));
+      setLoading(() => false);
+    });
+  };
 
   return (
     <div
@@ -50,7 +56,13 @@ const Add = ({className, handleNewPerson}) => {
         value={name}
         onChange={handleChange}
       />
-      <AddButton onClick={handleAdd}>Add</AddButton>
+      {isLoading && <Loading />}
+      <AddButton
+        onClick={isLoading ? () => {} : handleAdd}
+        isLoading={isLoading}
+      >
+        Add
+      </AddButton>
     </div>
   );
 };

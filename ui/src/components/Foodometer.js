@@ -4,6 +4,7 @@ import Api from '../api/api';
 import Person from './Person';
 import Add from './Add';
 import Popup from './Popup';
+import Loading from './Loading';
 
 const Team = ({className}) => {
   const [people, setPeople] = useState(null);
@@ -53,7 +54,7 @@ const Team = ({className}) => {
       ))}
     </div>
   ) : (
-    <div className={className}>Loading</div>
+    <Loading center />
   );
 };
 
