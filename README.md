@@ -63,7 +63,7 @@ cd foodometer
 
 #### 🔨 Building Foodometer
 
-You can build the project and start the prod server using `npm build && npm start`. \
+You can build the project and start the prod server using `npm run build && npm start`. \
 This will start the server on port 9000 by default.
 
 If you wish to start the prod server on any other port, just export the **PORT** env variable.
