@@ -1,4 +1,4 @@
-# foodometer
+# ![Foodometer](https://img.icons8.com/doodle/30/000000/french-fries.png) Foodometer 
 
 ### Setting up
 Export the following env variables:
