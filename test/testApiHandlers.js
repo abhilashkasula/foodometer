@@ -29,4 +29,19 @@ describe('API Hanlders Unit Tests', () => {
       assert.isOk(json.calledWith({error: 'Unauthorized'}));
     });
   });
+
+  describe('serveDetails', () => {
+    it('should server details', () => {
+      const json = sinon.spy();
+      const getDetails = sinon.stub();
+      const req = {app: {locals: {db: {getDetails}}}, session: {id: 1}};
+      const res = {json};
+      const data = {rupes: 100, foodmoji: 'frenchfries-url', people: [1, 2, 3]};
+      getDetails.withArgs(1).returns({then: (cb) => cb(data)});
+
+      handlers.serveDetails(req, res);
+
+      assert.isOk(json.calledWith(data));
+    });
+  });
 });
