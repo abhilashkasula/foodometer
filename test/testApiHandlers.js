@@ -37,11 +37,24 @@ describe('API Hanlders Unit Tests', () => {
       const req = {app: {locals: {db: {getDetails}}}, session: {id: 1}};
       const res = {json};
       const data = {rupes: 100, foodmoji: 'frenchfries-url', people: [1, 2, 3]};
-      getDetails.withArgs(1).returns({then: (cb) => cb(data)});
+      getDetails.withArgs(1).returns({then: cb => cb(data)});
 
       handlers.serveDetails(req, res);
 
       assert.isOk(json.calledWith(data));
+    });
+  });
+
+  describe('logout', () => {
+    it('should remove session', () => {
+      const json = sinon.spy();
+      const req = {session: {id: 1}};
+      const res = {json};
+
+      handlers.logout(req, res);
+
+      assert.deepStrictEqual(req, {session: null});
+      assert.isOk(json.calledWith({msg: 'Logged out'}));
     });
   });
 });
