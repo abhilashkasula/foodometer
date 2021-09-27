@@ -29,9 +29,12 @@ const Footer = styled.p`
   position: absolute;
   width: 100%;
   bottom: 0px;
-  text-align: center;
+  text-align: end;
+  right: 20px;
   @media (max-width: 768px) {
     font-size: 14px;
+    text-align: center;
+    right: 0px;
   }
 `;
 
