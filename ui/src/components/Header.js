@@ -25,6 +25,16 @@ const StyledH2 = styled.h2`
   }
 `;
 
+const Footer = styled.p`
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+  text-align: center;
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+`;
+
 const Header = ({className}) => {
   const [ref, isHovered] = useHover();
 
@@ -33,6 +43,17 @@ const Header = ({className}) => {
       <StyledH2>Time is always precious</StyledH2>
       <StyledH1>A fun way to make your team attend a meeting on time</StyledH1>
       <GetStarted nodeRef={ref} isHovered={isHovered} />
+      <Footer>
+        Made with 🖤 by{' '}
+        <a
+          href="https://github.com/abhilashkasula/foodometer"
+          target="_blank"
+          style={{color: 'black'}}
+          rel="noreferrer noopener"
+        >
+          Abhilash
+        </a>
+      </Footer>
     </div>
   );
 };
