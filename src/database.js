@@ -96,9 +96,7 @@ class Database {
       this.db
         .query(queries.decrementCount(userId, personId))
         .then(() => resolve({res: 'Success'}))
-        .catch(
-          err => reject({error: 'No user or person found'}) || console.log(err)
-        );
+        .catch(err => reject({error: 'No user or person found'}));
     });
   }
 }
