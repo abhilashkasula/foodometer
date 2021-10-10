@@ -57,13 +57,13 @@ const Foodmojis = ({className, foodmojis, changeFoodmoji}) => {
 };
 
 const StyledFoodmojis = styled(Foodmojis)`
-  margin-top: 15px;
+  margin: 15px 0 5px 0;
   display: flex;
   justify-content: center;
 `;
 
 const Title = styled.h5`
-  margin: 0;
+  margin: 5px 0;
   text-align: center;
 `;
 
