@@ -1,11 +1,13 @@
 import Layout from './Layout';
 import Header from './Header';
 import useAuthentication from './hooks/useAuthentication';
-import Foodometer from './Foodometer';
+import Container from './Container';
 import Loading from './Loading';
+import {useState} from 'react';
 
 const Home = () => {
   const [isAuthenticated, setAuthentication, isLoading] = useAuthentication();
+  const [isMenuShown, setMenuShown] = useState(false);
 
   document.body.style.background = 'white';
 
@@ -15,8 +17,17 @@ const Home = () => {
     <Layout
       isAuthenticated={isAuthenticated}
       setAuthentication={setAuthentication}
+      isMenuShown={isMenuShown}
+      setMenuShown={setMenuShown}
     >
-      {isAuthenticated ? <Foodometer /> : <Header />}
+      {isAuthenticated ? (
+        <Container
+          isMenuShown={isMenuShown}
+          setAuthentication={setAuthentication}
+        />
+      ) : (
+        <Header />
+      )}
     </Layout>
   );
 };

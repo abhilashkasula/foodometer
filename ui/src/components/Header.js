@@ -29,13 +29,35 @@ const Footer = styled.p`
   position: absolute;
   width: 100%;
   bottom: 0px;
-  text-align: end;
-  right: 20px;
+  text-align: center;
   @media (max-width: 768px) {
     font-size: 14px;
     text-align: center;
-    right: 0px;
   }
+`;
+
+const GithubLink = ({url, img, className}) => {
+  const [ref, isHovered] = useHover();
+
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noreferrer noopener"
+      className={className}
+      ref={ref}
+    >
+      <img
+        src={isHovered ? img.replace('817f7f', '000000') : img}
+        style={{height: '15px'}}
+        alt="Github link"
+      />
+    </a>
+  );
+};
+
+const StyledGithubLink = styled(GithubLink)`
+  margin: 0 5px;
 `;
 
 const Header = ({className}) => {
@@ -47,15 +69,18 @@ const Header = ({className}) => {
       <StyledH1>A fun way to make your team attend a meeting on time</StyledH1>
       <GetStarted nodeRef={ref} isHovered={isHovered} />
       <Footer>
-        Made with 🖤 by{' '}
-        <a
-          href="https://github.com/abhilashkasula/foodometer"
-          target="_blank"
-          style={{color: 'black'}}
-          rel="noreferrer noopener"
-        >
-          Abhilash
-        </a>
+        <StyledGithubLink
+          url="https://github.com/abhilashkasula/foodometer"
+          img="https://img.icons8.com/200/817f7f/star.png"
+        />
+        <StyledGithubLink
+          url="https://github.com/abhilashkasula/foodometer/fork"
+          img="https://img.icons8.com/200/817f7f/code-fork.png"
+        />
+        <StyledGithubLink
+          url="https://github.com/abhilashkasula/foodometer/issues"
+          img="https://img.icons8.com/200/817f7f/box-important.png"
+        />
       </Footer>
     </div>
   );

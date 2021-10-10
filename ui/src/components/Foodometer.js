@@ -6,9 +6,8 @@ import Add from './Add';
 import Popup from './Popup';
 import Loading from './Loading';
 
-const Team = ({className}) => {
+const Team = ({className, setTeamLoaded, foodmoji}) => {
   const [people, setPeople] = useState(null);
-  const [details, setDetails] = useState(null);
   const [isPopupShown, setPopup] = useState(false);
   const [person, setPerson] = useState(null);
 
@@ -18,9 +17,9 @@ const Team = ({className}) => {
   };
 
   useEffect(() => {
-    Api.getDetails().then(({people, foodmoji, rupees}) => {
+    Api.getPeople().then(({people}) => {
+      setTeamLoaded(true);
       setPeople(() => people);
-      setDetails(() => ({foodmoji, rupees}));
     });
   }, []);
 
@@ -32,7 +31,7 @@ const Team = ({className}) => {
   const handleDelete = () =>
     Api.deletePerson(person.id).then(({error}) => !error && remove());
 
-  return people && details ? (
+  return people && foodmoji ? (
     <div className={className}>
       <Add handleNewPerson={handleNewPerson} />
       {isPopupShown && (
@@ -45,8 +44,8 @@ const Team = ({className}) => {
       {people.map(id => (
         <Person
           key={id}
-          foodmoji={details.foodmoji}
-          rupees={details.rupees}
+          foodmoji={foodmoji.foodmoji}
+          rupees={foodmoji.value}
           id={id}
           handleDelete={handleDelete}
           onRemove={togglePopup}
@@ -61,23 +60,26 @@ const Team = ({className}) => {
 const StyledTeam = styled(Team)`
   display: flex;
   flex-wrap: wrap;
+  padding: 62px 92px;
+  @media (max-width: 768px) {
+    padding: 50px 30px;
+  }
 `;
 
-const Foodometer = ({className}) => {
+const Foodometer = ({className, setTeamLoaded, foodmoji}) => {
   document.body.style.background = 'white';
 
   return (
     <div className={className}>
-      <StyledTeam />
+      <StyledTeam setTeamLoaded={setTeamLoaded} foodmoji={foodmoji} />
     </div>
   );
 };
 
 const StyledFoodometer = styled(Foodometer)`
-  padding: 62px 92px;
-  @media (max-width: 768px) {
-    padding: 50px 30px;
-  }
+  height: 100%;
+  width: ${({isMenuShown}) => (isMenuShown ? '0%' : '100%')};
+  overflow: scroll;
 `;
 
 export default StyledFoodometer;

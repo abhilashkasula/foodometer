@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Icon = ({className}) => (
   <img
     className={className}
-    src="https://img.icons8.com/doodle/48/000000/french-fries.png"
+    src="https://img.icons8.com/doodle/200/000000/french-fries.png"
     alt="icon"
   />
 );
