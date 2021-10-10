@@ -1,7 +1,7 @@
 import Layout from './Layout';
 import Header from './Header';
 import useAuthentication from './hooks/useAuthentication';
-import Foodometer from './Foodometer';
+import Container from './Container';
 import Loading from './Loading';
 
 const Home = () => {
@@ -16,7 +16,7 @@ const Home = () => {
       isAuthenticated={isAuthenticated}
       setAuthentication={setAuthentication}
     >
-      {isAuthenticated ? <Foodometer /> : <Header />}
+      {isAuthenticated ? <Container /> : <Header />}
     </Layout>
   );
 };

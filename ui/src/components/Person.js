@@ -14,8 +14,7 @@ const Rupees = styled.div`
 `;
 
 const Delete = styled.img`
-  position: absolute;
-  transform: translate(510%, -110%);
+  transform: translate(510%, 0%);
   width: 20px;
   cursor: pointer;
 `;
@@ -91,7 +90,7 @@ const Person = ({className, foodmoji, rupees, id, onRemove}) => {
 const StyledPerson = styled(Person)`
   border: 1px solid #d4dadf;
   border-radius: 4px;
-  padding: 32px 24px;
+  padding: 12px 24px 32px 24px;
   width: 200px;
   display: flex;
   flex-direction: column;

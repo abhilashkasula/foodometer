@@ -7,7 +7,7 @@ const Layout = ({children, isAuthenticated, setAuthentication}) => {
         isAuthenticated={isAuthenticated}
         setAuthentication={setAuthentication}
       />
-      <div>{children}</div>
+      {children}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 const insertUser = (email, password, foodmoji, rupees) =>
-  `INSERT INTO users (email, password, foodmoji, rupees) VALUES ('${email}', '${password}', '${foodmoji}', ${rupees})`;
+  `INSERT INTO users (email, password) VALUES ('${email}', '${password}')`;
 
 const getUserByEmail = email => `SELECT * FROM users WHERE email = '${email}'`;
 
@@ -23,6 +23,13 @@ const incrementCount = (userId, personId) =>
 const decrementCount = (userId, personId) =>
   `UPDATE meter SET count = count - 1 WHERE user_id = ${userId} AND id = ${personId}`;
 
+const getFoodmojis = () => 'SELECT * FROM foodmojis;';
+
+const getFoodmoji = id => `SELECT * FROM foodmojis WHERE id = ${id}`;
+
+const updateFoodmoji = (userId, foodmojiId) =>
+  `UPDATE users SET foodmoji = ${foodmojiId} WHERE id = ${userId}`;
+
 module.exports = {
   insertUser,
   getUserByEmail,
@@ -33,4 +40,7 @@ module.exports = {
   incrementCount,
   decrementCount,
   deletePerson,
+  getFoodmojis,
+  getFoodmoji,
+  updateFoodmoji,
 };

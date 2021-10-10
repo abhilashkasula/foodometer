@@ -9,6 +9,7 @@ const ROUTES = {
   INCREMENT: '/api/increment',
   DECREMENT: '/api/decrement',
   DELETE_PERSON: '/api/deletePerson',
+  CHANGE_FOODMOJI: '/api/changeFoodmoji',
 };
 
 const get = route => fetch(route).then(res => res.json());
@@ -35,6 +36,8 @@ const deletePerson = person => post(ROUTES.DELETE_PERSON, {person});
 const incrementCount = id => post(ROUTES.INCREMENT, {personId: id});
 const decrementCount = id => post(ROUTES.DECREMENT, {personId: id});
 
+const changeFoodmoji = id => post(ROUTES.CHANGE_FOODMOJI, {id});
+
 const Api = {
   isAuth,
   login,
@@ -46,6 +49,7 @@ const Api = {
   incrementCount,
   decrementCount,
   deletePerson,
+  changeFoodmoji,
 };
 
 export default Api;

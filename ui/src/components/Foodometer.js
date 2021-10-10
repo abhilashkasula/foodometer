@@ -6,7 +6,7 @@ import Add from './Add';
 import Popup from './Popup';
 import Loading from './Loading';
 
-const Team = ({className}) => {
+const Team = ({className, setTeamLoaded, setFoodmojis}) => {
   const [people, setPeople] = useState(null);
   const [details, setDetails] = useState(null);
   const [isPopupShown, setPopup] = useState(false);
@@ -18,9 +18,12 @@ const Team = ({className}) => {
   };
 
   useEffect(() => {
-    Api.getDetails().then(({people, foodmoji, rupees}) => {
+    Api.getDetails().then(({people, foodmojis}) => {
+      const {foodmoji, value} = foodmojis.find(moji => moji.isSelected);
+      setFoodmojis(() => foodmojis);
       setPeople(() => people);
-      setDetails(() => ({foodmoji, rupees}));
+      setDetails(() => ({foodmoji, rupees: value}));
+      setTeamLoaded(true);
     });
   }, []);
 
@@ -61,23 +64,26 @@ const Team = ({className}) => {
 const StyledTeam = styled(Team)`
   display: flex;
   flex-wrap: wrap;
+  padding: 62px 92px;
+  @media (max-width: 768px) {
+    padding: 50px 30px;
+  }
 `;
 
-const Foodometer = ({className}) => {
+const Foodometer = ({className, setTeamLoaded, setFoodmojis}) => {
   document.body.style.background = 'white';
 
   return (
     <div className={className}>
-      <StyledTeam />
+      <StyledTeam setTeamLoaded={setTeamLoaded} setFoodmojis={setFoodmojis} />
     </div>
   );
 };
 
 const StyledFoodometer = styled(Foodometer)`
-  padding: 62px 92px;
-  @media (max-width: 768px) {
-    padding: 50px 30px;
-  }
+  height: 100%;
+  width: 100%;
+  overflow: scroll;
 `;
 
 export default StyledFoodometer;

@@ -68,6 +68,16 @@ const decrementCount = (req, res) => {
     .catch(err => res.status(400).json(err));
 };
 
+const changeFoodmoji = (req, res) => {
+  const {id: foodmojiId} = req.body;
+  const {id} = req.session;
+  const {db} = req.app.locals;
+
+  db.changeFoodmoji(id, foodmojiId)
+    .then(response => res.json(response))
+    .catch(err => res.status(400).json(err));
+};
+
 module.exports = {
   allowAuthorized,
   serveDetails,
@@ -77,4 +87,5 @@ module.exports = {
   servePerson,
   incrementCount,
   decrementCount,
+  changeFoodmoji,
 };
