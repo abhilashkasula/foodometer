@@ -30,16 +30,16 @@ describe('API Hanlders Unit Tests', () => {
     });
   });
 
-  describe('serveDetails', () => {
-    it('should server details', () => {
+  describe('servePeople', () => {
+    it('should server people ids', () => {
       const json = sinon.spy();
-      const getDetails = sinon.stub();
-      const req = {app: {locals: {db: {getDetails}}}, session: {id: 1}};
+      const getPeople = sinon.stub();
+      const req = {app: {locals: {db: {getPeople}}}, session: {id: 1}};
       const res = {json};
-      const data = {rupes: 100, foodmoji: 'frenchfries-url', people: [1, 2, 3]};
-      getDetails.withArgs(1).returns({then: cb => cb(data)});
+      const data = {people: [1, 2, 3]};
+      getPeople.withArgs(1).returns({then: cb => cb(data)});
 
-      handlers.serveDetails(req, res);
+      handlers.servePeople(req, res);
 
       assert.isOk(json.calledWith(data));
     });
