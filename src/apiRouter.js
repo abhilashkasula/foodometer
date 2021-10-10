@@ -18,7 +18,7 @@ api.get('/isAuthenticated', [
   handlers.allowAuthorized,
   (req, res) => res.json({msg: 'Authenticated'}),
 ]);
-api.get('/details', [handlers.allowAuthorized, handlers.serveDetails]);
+api.get('/people', [handlers.allowAuthorized, handlers.servePeople]);
 api.get('/person/:id', [handlers.allowAuthorized, handlers.servePerson]);
 
 api.post('/increment', [handlers.allowAuthorized, handlers.incrementCount]);
@@ -28,6 +28,7 @@ api.post('/addPerson', [handlers.allowAuthorized, handlers.addPerson]);
 api.post('/deletePerson', [handlers.allowAuthorized, handlers.deletePerson]);
 
 api.post('/changeFoodmoji', [handlers.allowAuthorized, handlers.changeFoodmoji]);
+api.get('/foodmojis', [handlers.allowAuthorized, handlers.serveFoodmojis]);
 
 api.post('/logout', [handlers.allowAuthorized, handlers.logout]);
 

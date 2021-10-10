@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import SelectFoodmoji from './SelectFoodmoji';
 
-const Menu = ({className, foodmojis}) => {
+const Menu = ({className, foodmojis, changeFoodmoji}) => {
   return (
     <div className={className}>
-      <SelectFoodmoji foodmojis={foodmojis} />
+      <SelectFoodmoji foodmojis={foodmojis} changeFoodmoji={changeFoodmoji} />
     </div>
   );
 };

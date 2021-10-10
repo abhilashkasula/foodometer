@@ -2,10 +2,18 @@ import styled from 'styled-components';
 import Api from '../api/api';
 import useHover from './hooks/useHover';
 
-const Foodmoji = ({id, foodmoji, title, value, className}) => {
+const Foodmoji = ({
+  id,
+  foodmoji,
+  title,
+  value,
+  className,
+  changeFoodmoji: updateFoodmoji,
+}) => {
   const [ref, isHovered] = useHover();
 
-  const changeFoodmoji = () => Api.changeFoodmoji(id);
+  const changeFoodmoji = () =>
+    Api.changeFoodmoji(id).then(() => updateFoodmoji(id));
 
   return (
     <img
@@ -29,7 +37,7 @@ const StyledFoodmoji = styled(Foodmoji)`
   cursor: pointer;
 `;
 
-const Foodmojis = ({className, foodmojis}) => {
+const Foodmojis = ({className, foodmojis, changeFoodmoji}) => {
   return (
     <div className={className}>
       {foodmojis &&
@@ -41,6 +49,7 @@ const Foodmojis = ({className, foodmojis}) => {
             title={title}
             value={value}
             key={id}
+            changeFoodmoji={changeFoodmoji}
           />
         ))}
     </div>
@@ -58,11 +67,11 @@ const Title = styled.h5`
   text-align: center;
 `;
 
-const SelectFoodmoji = ({className, foodmojis}) => {
+const SelectFoodmoji = ({className, foodmojis, changeFoodmoji}) => {
   return (
     <div className={className}>
       <Title>Select your foodmoji</Title>
-      <StyledFoodmojis foodmojis={foodmojis} />
+      <StyledFoodmojis foodmojis={foodmojis} changeFoodmoji={changeFoodmoji} />
     </div>
   );
 };

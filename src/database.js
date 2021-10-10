@@ -32,19 +32,12 @@ class Database {
     });
   }
 
-  getDetails(id) {
+  getPeople(id) {
     return new Promise(resolve => {
       this.db.connect((err, client, done) => {
-        client.query(queries.getUserById(id)).then(({rows}) => {
-          const {foodmoji} = rows[0];
-          client.query(queries.getFoodmojis()).then(({rows: foodmojis}) => {
-            const selected = foodmojis.find(moji => moji.id === foodmoji);
-            selected.isSelected = true;
-            client.query(queries.getIds(id)).then(({rows}) => {
-              resolve({foodmojis, people: rows.map(row => row.id)});
-              done();
-            });
-          });
+        client.query(queries.getPeople(id)).then(({rows}) => {
+          resolve({people: rows.map(row => row.id)});
+          done();
         });
       });
     });
@@ -117,6 +110,19 @@ class Database {
             .then(() => resolve({res: 'Success'}));
         })
         .catch(() => reject({error: `No foodmoji with ${foodmojiId} found`}));
+    });
+  }
+
+  getFoodmojis(userId) {
+    return new Promise(resolve => {
+      this.db.query(queries.getUserById(userId)).then(({rows}) => {
+        const {foodmoji} = rows[0];
+        this.db.query(queries.getFoodmojis()).then(({rows}) => {
+          const selected = rows.find(moji => moji.id === foodmoji);
+          selected.isSelected = true;
+          resolve(rows);
+        });
+      });
     });
   }
 }

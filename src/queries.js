@@ -5,7 +5,7 @@ const getUserByEmail = email => `SELECT * FROM users WHERE email = '${email}'`;
 
 const getUserById = id => `SELECT * FROM users WHERE id = '${id}'`;
 
-const getIds = id =>
+const getPeople = id =>
   `SELECT id FROM meter WHERE user_id = ${id} ORDER BY id DESC`;
 
 const getPerson = (userId, id) =>
@@ -34,7 +34,7 @@ module.exports = {
   insertUser,
   getUserByEmail,
   getUserById,
-  getIds,
+  getPeople,
   addPerson,
   getPerson,
   incrementCount,

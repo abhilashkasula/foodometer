@@ -10,10 +10,10 @@ const logout = (req, res) => {
   res.json({msg: 'Logged out'});
 };
 
-const serveDetails = (req, res) => {
+const servePeople = (req, res) => {
   const {db} = req.app.locals;
 
-  db.getDetails(req.session.id).then(rows => res.json(rows));
+  db.getPeople(req.session.id).then(rows => res.json(rows));
 };
 
 const servePerson = (req, res) => {
@@ -78,9 +78,16 @@ const changeFoodmoji = (req, res) => {
     .catch(err => res.status(400).json(err));
 };
 
+const serveFoodmojis = (req, res) => {
+  const {id} = req.session;
+  const {db} = req.app.locals;
+
+  db.getFoodmojis(id).then(response => res.json(response));
+};
+
 module.exports = {
   allowAuthorized,
-  serveDetails,
+  servePeople,
   logout,
   addPerson,
   deletePerson,
@@ -88,4 +95,5 @@ module.exports = {
   incrementCount,
   decrementCount,
   changeFoodmoji,
+  serveFoodmojis,
 };

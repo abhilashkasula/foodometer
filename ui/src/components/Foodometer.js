@@ -6,9 +6,8 @@ import Add from './Add';
 import Popup from './Popup';
 import Loading from './Loading';
 
-const Team = ({className, setTeamLoaded, setFoodmojis}) => {
+const Team = ({className, setTeamLoaded, foodmoji}) => {
   const [people, setPeople] = useState(null);
-  const [details, setDetails] = useState(null);
   const [isPopupShown, setPopup] = useState(false);
   const [person, setPerson] = useState(null);
 
@@ -18,12 +17,9 @@ const Team = ({className, setTeamLoaded, setFoodmojis}) => {
   };
 
   useEffect(() => {
-    Api.getDetails().then(({people, foodmojis}) => {
-      const {foodmoji, value} = foodmojis.find(moji => moji.isSelected);
-      setFoodmojis(() => foodmojis);
-      setPeople(() => people);
-      setDetails(() => ({foodmoji, rupees: value}));
+    Api.getPeople().then(({people}) => {
       setTeamLoaded(true);
+      setPeople(() => people);
     });
   }, []);
 
@@ -35,7 +31,7 @@ const Team = ({className, setTeamLoaded, setFoodmojis}) => {
   const handleDelete = () =>
     Api.deletePerson(person.id).then(({error}) => !error && remove());
 
-  return people && details ? (
+  return people && foodmoji ? (
     <div className={className}>
       <Add handleNewPerson={handleNewPerson} />
       {isPopupShown && (
@@ -48,8 +44,8 @@ const Team = ({className, setTeamLoaded, setFoodmojis}) => {
       {people.map(id => (
         <Person
           key={id}
-          foodmoji={details.foodmoji}
-          rupees={details.rupees}
+          foodmoji={foodmoji.foodmoji}
+          rupees={foodmoji.value}
           id={id}
           handleDelete={handleDelete}
           onRemove={togglePopup}
@@ -70,12 +66,12 @@ const StyledTeam = styled(Team)`
   }
 `;
 
-const Foodometer = ({className, setTeamLoaded, setFoodmojis}) => {
+const Foodometer = ({className, setTeamLoaded, foodmoji}) => {
   document.body.style.background = 'white';
 
   return (
     <div className={className}>
-      <StyledTeam setTeamLoaded={setTeamLoaded} setFoodmojis={setFoodmojis} />
+      <StyledTeam setTeamLoaded={setTeamLoaded} foodmoji={foodmoji} />
     </div>
   );
 };
