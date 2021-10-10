@@ -78,7 +78,7 @@ const Foodometer = ({className, setTeamLoaded, foodmoji}) => {
 
 const StyledFoodometer = styled(Foodometer)`
   height: 100%;
-  width: 100%;
+  width: ${({isMenuShown}) => (isMenuShown ? '0%' : '100%')};
   overflow: scroll;
 `;
 

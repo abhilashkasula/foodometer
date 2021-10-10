@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import Api from '../api/api';
 import Foodometer from './Foodometer';
 import Menu from './Menu';
+import useMobileView from './hooks/useMobileView';
 
-const isMobileView = width => width <= 768;
-
-const Container = ({className}) => {
+const Container = ({className, isMenuShown, setAuthentication}) => {
   const [isTeamLoaded, setTeamLoaded] = useState(false);
   const [foodmojis, setFoodmojis] = useState(null);
   const [foodmoji, setFoodmoji] = useState(null);
+  const [isMobileView, windowSize] = useMobileView();
 
   useEffect(() => {
     Api.getFoodmojis().then(foodmojis => {
@@ -35,18 +35,28 @@ const Container = ({className}) => {
   };
 
   return (
-    <div className={className}>
-      <Foodometer setTeamLoaded={setTeamLoaded} foodmoji={foodmoji} />
-      {isTeamLoaded && foodmojis && !isMobileView(window.innerWidth) && (
-        <Menu foodmojis={foodmojis} changeFoodmoji={changeFoodmoji} />
-      )}
+    <div className={className} style={{height: `${windowSize.height - 85}px`}}>
+      <Foodometer
+        setTeamLoaded={setTeamLoaded}
+        foodmoji={foodmoji}
+        isMenuShown={isMenuShown}
+      />
+      {isTeamLoaded &&
+        foodmojis &&
+        (!isMobileView || (isMobileView && isMenuShown)) && (
+          <Menu
+            foodmojis={foodmojis}
+            changeFoodmoji={changeFoodmoji}
+            isMobileView={isMobileView}
+            setAuthentication={setAuthentication}
+          />
+        )}
     </div>
   );
 };
 
 const StyledContainer = styled(Container)`
   display: flex;
-  height: ${() => window.innerHeight - 85 + 'px'};
 `;
 
 export default StyledContainer;

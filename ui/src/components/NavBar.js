@@ -1,76 +1,27 @@
-import {useState} from 'react';
-import {Link} from 'react-router-dom';
 import styled from 'styled-components';
-import Api from '../api/api';
+import useMobileView from './hooks/useMobileView';
 import Logo from './Logo';
-import Popup from './Popup';
+import Logout from './Logout';
+import {Space, StyledList, OptionLink} from './Nav';
+import MenuToggle from './MenuToggle';
 
-const Space = styled.li`
-  flex: 1 1 auto;
-  margin: 0px 88px;
-  display: block;
-  padding: 0;
-  overflow: hidden;
-  position: relative;
-  max-width: 750px;
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
-
-const StyledList = styled.ul`
-  list-style-type: none;
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  padding: 0;
-  max-width: 1448px;
-  @media (max-width: 768px) {
-    justify-content: ${({isMob}) => isMob && 'space-between'};
-  }
-`;
-
-const OptionLink = styled(Link)`
-  text-decoration: none;
-  font-size: 18px;
-  font-weight: 500;
-  padding: 10px 30px;
-  background: ${({signup}) => (signup === 'true' ? 'black' : 'transparent')};
-  color: ${({signup}) => (signup === 'true' ? 'white' : 'black')};
-  border-radius: 4px;
-  @media (max-width: 768px) {
-    font-size: 14px;
-    padding: 10px 18px;
-  }
-`;
-
-const AuthorizeOptions = ({className, isAuthenticated, setAuthentication}) => {
-  const [isPopupShown, setPopup] = useState(null);
-
-  const togglePopup = () => setPopup(() => !isPopupShown);
-
-  const logout = () =>
-    Api.logout().then(() => togglePopup() || setAuthentication(() => false));
-
-  const handleLogout = e => e.preventDefault() || togglePopup();
+const AuthorizeOptions = ({
+  className,
+  isAuthenticated,
+  setAuthentication,
+  isMenuShown,
+  setMenuShown,
+}) => {
+  const [isMobileView] = useMobileView();
 
   return (
     <li className={className}>
       {isAuthenticated ? (
-        <StyledList>
-          {isPopupShown && (
-            <Popup
-              toggle={togglePopup}
-              otherOptions={[{name: 'Logout', onClick: logout}]}
-              msg={`Are you sure you want to logout?`}
-            />
-          )}
-          <li>
-            <OptionLink to="/" onClick={handleLogout}>
-              Logout
-            </OptionLink>
-          </li>
-        </StyledList>
+        isMobileView ? (
+          <MenuToggle isMenuShown={isMenuShown} setMenuShown={setMenuShown} />
+        ) : (
+          <Logout setAuthentication={setAuthentication} />
+        )
       ) : (
         <StyledList>
           <li>
@@ -100,7 +51,13 @@ const StyledAuthorizeOptions = styled(AuthorizeOptions)`
   }
 `;
 
-const NavBar = ({className, isAuthenticated, setAuthentication}) => {
+const NavBar = ({
+  className,
+  isAuthenticated,
+  setAuthentication,
+  isMenuShown,
+  setMenuShown,
+}) => {
   return (
     <div className={className}>
       <StyledList isMob>
@@ -109,6 +66,8 @@ const NavBar = ({className, isAuthenticated, setAuthentication}) => {
         <StyledAuthorizeOptions
           isAuthenticated={isAuthenticated}
           setAuthentication={setAuthentication}
+          isMenuShown={isMenuShown}
+          setMenuShown={setMenuShown}
         />
       </StyledList>
     </div>
